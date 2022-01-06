@@ -1,0 +1,14 @@
+
+# server
+
+server:
+  address:
+  port:
+
+upload:
+  savepath: "g:/img/picture"
+
+redis_server:
+  address: "localhost:6378"
+  password: ""
+  database: 0
