@@ -7,7 +7,7 @@ import (
 )
 
 // redis 数据库初始化连接函数
-func InitClient() {
+func initClient() {
 	add := viper.GetString("redis_server.address")
 	//fmt.Println(add)
 	global.RDB = redis.NewClient(&redis.Options{

@@ -6,6 +6,8 @@ import (
 )
 
 var (
+	CONFIG *Config
 	RDB *redis.Client
 	PrivateKey *rsa.PrivateKey
+	PublicKey *rsa.PublicKey
 )

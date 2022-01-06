@@ -12,3 +12,8 @@ redis_server:
   address: "localhost:6378"
   password: ""
   database: 0
+
+mysql_server:
+  address: "localhost:6378"
+  password: ""
+  database: 0

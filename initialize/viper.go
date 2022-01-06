@@ -2,9 +2,10 @@ package initialize
 
 import (
 	"fmt"
+	"gin_mall/global"
 	"github.com/spf13/viper"
 )
-func InitViper() {
+func initViper() {
 	viper.SetConfigName("config") // name of config file (without extension)
 	viper.SetConfigType("yaml")   // REQUIRED if the config file does not have the extension in the name
 	viper.AddConfigPath(".")      // optionally look for config in the working directory
@@ -18,5 +19,8 @@ func InitViper() {
 	}
 	viper.SetDefault("server.port",8080)
 	viper.SetDefault("server.address","127.0.0.1")
+	if err := viper.Unmarshal(&global.CONFIG);err!=nil{
+		panic(err)
+	}
 	viper.WatchConfig()
 }
