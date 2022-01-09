@@ -18,3 +18,5 @@ func initMysql() {
 	global.MDB.SetMaxOpenConns(100)
 	global.MDB.SetMaxIdleConns(10)
 }
+
+

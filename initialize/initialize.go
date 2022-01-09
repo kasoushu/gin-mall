@@ -4,13 +4,15 @@ import (
 	"crypto/rand"
 	"crypto/rsa"
 	"gin_mall/global"
+	"github.com/gin-gonic/gin"
 )
 
-func Initial()  {
+func Initial(g *gin.Engine)  {
 	initViper()
 	initClient()
 	initPrivateKey()
 	initMysql()
+	initRouter(g)
 }
 func initPrivateKey() {
 	var err error
