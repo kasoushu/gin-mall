@@ -19,7 +19,7 @@ func initViper() {
 	}
 	viper.SetDefault("server.port",8080)
 	viper.SetDefault("server.address","127.0.0.1")
-	if err := viper.Unmarshal(&global.CONFIG);err!=nil{
+	if err := viper.Unmarshal(&global.Config);err!=nil{
 		panic(err)
 	}
 	viper.WatchConfig()

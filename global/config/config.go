@@ -1,8 +1,8 @@
-package global
+package config
 
 type Config struct {
-	Server Server `mapstructure:"server"`
-	Upload Upload `mapstructure:"upload"`
+	Server      Server      `mapstructure:"server"`
+	Upload      Upload      `mapstructure:"upload"`
 	RedisServer RedisServer `mapstructure:"redis_server"`
 	MysqlServer MysqlServer `mapstructure:"mysql_server"`
 }
@@ -39,5 +39,4 @@ type MysqlServer struct {
 	Address string `mapstructure:"address"`
 	Password string `mapstructure:"password"`
 	Database int `mapstructure:"database"`
-
 }

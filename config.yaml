@@ -9,11 +9,11 @@ upload:
   savepath: "g:/img/picture"
 
 redis_server:
-  address: "localhost:6378"
+  address: "127.0.0.1:6378"
   password: ""
   database: 0
 
 mysql_server:
-  address: "localhost:6378"
+  address: "root:0026@tcp(127.0.0.1:3308)/mall"
   password: ""
   database: 0

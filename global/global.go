@@ -2,12 +2,15 @@ package global
 
 import (
 	"crypto/rsa"
+	"database/sql"
+	"gin_mall/global/config"
 	"github.com/go-redis/redis"
 )
 
 var (
-	CONFIG *Config
-	RDB *redis.Client
+	Config     *config.Config
+	RDB        *redis.Client
+	MDB        *sql.DB
 	PrivateKey *rsa.PrivateKey
-	PublicKey *rsa.PublicKey
+	PublicKey  *rsa.PublicKey
 )

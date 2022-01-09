@@ -3,7 +3,6 @@ package initialize
 import (
 	"crypto/rand"
 	"crypto/rsa"
-	"fmt"
 	"gin_mall/global"
 )
 
@@ -11,6 +10,7 @@ func Initial()  {
 	initViper()
 	initClient()
 	initPrivateKey()
+	initMysql()
 }
 func initPrivateKey() {
 	var err error
@@ -19,6 +19,4 @@ func initPrivateKey() {
 		panic(err)
 	}
 	global.PublicKey = &global.PrivateKey.PublicKey
-	fmt.Println(global.PrivateKey)
-	fmt.Println(global.PublicKey)
 }
