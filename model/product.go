@@ -5,9 +5,9 @@ type Product struct {
 	CategoryId       uint64  `json:"category_id"`
 	Title            string  `json:"title"`
 	Description      string  `json:"description"`
-	Price            uint    `json:"price"`
+	Price            float32 `json:"price"`
 	Amount           uint    `json:"amount"`
-	MainImage        string  `json:"mainImage"`
+	MainImage        string  `json:"main_image"`
 	Delivery         string  `json:"delivery"`
 	Assurance        string  `json:"assurance"`
 	Name             string  `json:"name"`
