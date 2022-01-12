@@ -7,6 +7,7 @@ type Product struct {
 	Description      string  `json:"description"`
 	Price            float32 `json:"price"`
 	Amount           uint    `json:"amount"`
+	Sales            uint    `json:"sales"`
 	MainImage        string  `json:"main_image"`
 	Delivery         string  `json:"delivery"`
 	Assurance        string  `json:"assurance"`
