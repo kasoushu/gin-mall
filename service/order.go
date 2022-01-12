@@ -32,7 +32,7 @@ func UpdateOrder(id uint64, order model.Order) bool {
 		fmt.Println(row.Err())
 		return false
 	}
-	pre, err := global.MDB.Prepare("update from orders set status=? ,orders.updated = ? where orders.id=? ")
+	pre, err := global.MDB.Prepare("update orders set status=? ,orders.updated = ? where orders.id=? ")
 	if err != nil {
 		fmt.Println(err)
 		return false

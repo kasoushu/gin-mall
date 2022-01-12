@@ -63,7 +63,7 @@ func UpdateCommodity(id, p model.Product) bool {
 	}
 	p.Updated = time.Now().Format("2006-01-02 15:04:05")
 
-	pre, err := global.MDB.Prepare(`update from products set category_id = ? , 
+	pre, err := global.MDB.Prepare(`update products set category_id = ? , 
                          title =? ,
                          description=? ,
                          price=? ,
