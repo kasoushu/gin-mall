@@ -18,8 +18,27 @@ func initRouter(g *gin.Engine) {
 	user.Use(middleware.JwtAuth())
 	//管理员
 	admin := g.Group("/admin")
-	admin.Use(middleware.JwtAuth())
+	//admin.Use(middleware.JwtAuth())
+	admin.GET("/get_product_info/:id", api.GetSingleProductInfo)
+	admin.GET("/get_order_info/:id", api.GetSingleOrderInfo)
+	admin.GET("/get_category_info/:id", api.GetCategoryInfo)
+	admin.GET("/get_address_info/:id", api.GetSingleAddressInfo)
 
+	admin.POST("/update_product/:id", api.UpdateProduct)
+	admin.POST("/create_product", api.CreteProduct)
+	admin.POST("/delete_product/:id", api.DeleteProduct)
+
+	admin.POST("/update_category/:id", api.UpdateCategory)
+	admin.POST("/create_category", api.CreteCategory)
+	admin.POST("/delete_category/:id", api.DeleteCategory)
+
+	admin.POST("/update_order/:id", api.UpdateOrder)
+	admin.POST("/create_order", api.CreteOrder)
+	admin.POST("/delete_order/:id", api.DeleteOrder)
+
+	admin.POST("/update_address/:id", api.UpdateAddress)
+	admin.POST("/create_address", api.CreteAddress)
+	admin.POST("/delete_address/:id", api.DeleteProduct)
 	//user.GET("/", func(c *gin.Context) {
 	//	c.JSON(200,gin.H{
 	//		"msg":"welcome to my home",

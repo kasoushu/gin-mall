@@ -39,7 +39,7 @@ func CreateCommodity(p model.Product) bool {
 }
 
 func DeleteCommodity(id uint64) bool {
-	_, err := global.MDB.Exec("delete from products where id = ? ", id)
+	_, err := global.MDB.Exec("delete from products where product_id = ? ", id)
 	if err != nil {
 		fmt.Println(err)
 		return false
@@ -47,7 +47,7 @@ func DeleteCommodity(id uint64) bool {
 	return true
 }
 
-func UpdateCommodity(id, p model.Product) bool {
+func UpdateCommodity(id uint64, p model.Product) bool {
 
 	//row := global.MDB.QueryRow(`select category_id,
 	//   title, description,price,
@@ -79,7 +79,7 @@ func UpdateCommodity(id, p model.Product) bool {
                          shelf_life=? , 
 	    net_weight=? , use_way=? , packing_way=? , 
 	    storage_condition=? , detail_image=? ,
-		status=? , updated=? where id = ? `)
+		status=? , updated=? where product_id = ? `)
 	if err != nil {
 		fmt.Println(err)
 		return false
@@ -104,7 +104,7 @@ func GetProductInfo(id uint64, p *model.Product) bool {
 	  assurance,name, weight, brand, origin, shelf_life,
 	   net_weight, use_way, packing_way,
 	   storage_condition, detail_image,
-		status, created, updated from products where id = ? `, id)
+		status, created, updated from products where product_id = ? `, id)
 	if row.Err() != nil {
 		fmt.Println(row.Err())
 		return false
