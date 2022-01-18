@@ -6,6 +6,7 @@ type Config struct {
 	RedisServer RedisServer `mapstructure:"redis_server"`
 	MysqlServer MysqlServer `mapstructure:"mysql_server"`
 }
+
 //server:
 //address:
 //port:
@@ -25,18 +26,18 @@ type Config struct {
 
 type Server struct {
 	Address string `mapstructure:"address"`
-	Port string		`mapstructure:"port"`
+	Port    string `mapstructure:"port"`
 }
 type Upload struct {
-	Path string			`mapstructure:"savepath"`
+	Path string `mapstructure:"savepath"`
 }
 type RedisServer struct {
-	Address string `mapstructure:"address"`
+	Address  string `mapstructure:"address"`
 	Password string `mapstructure:"password"`
-	Database int `mapstructure:"databse"`
+	Database int    `mapstructure:"databse"`
 }
 type MysqlServer struct {
-	Address string `mapstructure:"address"`
+	Address  string `mapstructure:"address"`
 	Password string `mapstructure:"password"`
-	Database int `mapstructure:"database"`
+	Database int    `mapstructure:"database"`
 }

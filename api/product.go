@@ -19,7 +19,8 @@ func CreteProduct(ctx *gin.Context) {
 		model.Failed("params error", ctx)
 		return
 	}
-
+	id := ctx.MustGet("primary_id")
+	product.CreatedBy = id.(uint64)
 	if service.CreateCommodity(product) {
 		model.Success("create successful!", "", ctx)
 		return

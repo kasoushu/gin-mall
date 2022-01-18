@@ -16,9 +16,9 @@ func CreateCommodity(p model.Product) bool {
 	    name, weight, brand, origin, shelf_life, 
 	    net_weight, use_way, packing_way, 
 	    storage_condition, detail_image,
-		status, created, updated
+		status, created, updated,created_by
 		) 
-	values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`)
+	values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`)
 	if err != nil {
 		fmt.Println(err)
 		return false
@@ -29,7 +29,7 @@ func CreateCommodity(p model.Product) bool {
 		p.Assurance, p.Name, p.Weight, p.Brand,
 		p.Origin, p.ShelfLIfe, p.NetWeight, p.UseWay,
 		p.PackingWay, p.StorageCondition, p.DetailImage,
-		p.Status, p.Created, p.Updated)
+		p.Status, p.Created, p.Updated, p.CreatedBy)
 	if err != nil {
 		fmt.Println(err)
 		return false
@@ -104,7 +104,7 @@ func GetProductInfo(id uint64, p *model.Product) bool {
 	  assurance,name, weight, brand, origin, shelf_life,
 	   net_weight, use_way, packing_way,
 	   storage_condition, detail_image,
-		status, created, updated from products where product_id = ? `, id)
+		status, created, updated,created_by from products where product_id = ? `, id)
 	if row.Err() != nil {
 		fmt.Println(row.Err())
 		return false
@@ -114,7 +114,7 @@ func GetProductInfo(id uint64, p *model.Product) bool {
 		&p.Assurance, &p.Name, &p.Weight, &p.Brand,
 		&p.Origin, &p.ShelfLIfe, &p.NetWeight, &p.UseWay,
 		&p.PackingWay, &p.StorageCondition, &p.DetailImage,
-		&p.Status, &p.Created, &p.Updated)
+		&p.Status, &p.Created, &p.Updated, &p.CreatedBy)
 	if err != nil {
 		fmt.Println(err)
 		return false

@@ -10,48 +10,53 @@ import (
 )
 
 type claims struct {
-	name string
-	phone string
+	Id    uint64
+	Phone string
 	jwt.StandardClaims
 }
 
-
-func CreateToken(name,phone string) (string,error) {
+func CreateToken(id uint64, phone string) (string, error) {
 	claim := claims{
-		name,
+		id,
 		phone,
 		jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(time.Minute*60).Unix(),
+			ExpiresAt: time.Now().Add(time.Minute * 60).Unix(),
 		},
 	}
-	token := jwt.NewWithClaims(jwt.SigningMethodRS256,claim)
+	fmt.Println("create token id,phone", id, "   ", phone)
+	token := jwt.NewWithClaims(jwt.SigningMethodRS256, claim)
 	return token.SignedString(global.PrivateKey)
 }
 
-func VerifyToken(tokenstring string) error {
-	_,err := jwt.ParseWithClaims(tokenstring,&claims{}, func(token *jwt.Token) (interface{}, error) {
-		return  global.PublicKey,nil
+func VerifyToken(tokenstring string) uint64 {
+	tk, err := jwt.ParseWithClaims(tokenstring, &claims{}, func(token *jwt.Token) (interface{}, error) {
+		return global.PublicKey, nil
 	})
 	if err != nil {
-		return err
+		fmt.Println(err)
+		return 0
 	}
-	return nil
+	c := tk.Claims.(*claims)
+	//fmt.Println("==========id================", c)
+	return c.Id
 }
 
 func JwtAuth() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		tk := c.Request.Header.Get("token")
-		if tk=="" {
-			model.Failed("token is empty",c)
+		if tk == "" {
+			model.Failed("token is empty", c)
 			c.Abort()
 			return
 		}
-		if err :=VerifyToken(tk);err!=nil {
-			model.Failed("token authorization error",c)
-			fmt.Println(err)
+		k := VerifyToken(tk)
+		if k == 0 {
+			model.Failed("token authorization error", c)
 			c.Abort()
 			return
 		}
+		c.Set("primary_id", k)
+		//fmt.Println("===================================== ", k)
 		c.Next()
 	}
 }

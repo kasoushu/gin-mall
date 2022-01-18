@@ -16,9 +16,26 @@ func initRouter(g *gin.Engine) {
 	user := g.Group("/:id")
 	//
 	user.Use(middleware.JwtAuth())
+
+	user.GET("/say", func(c *gin.Context) {
+		k, _ := c.Get("primary_id")
+		c.JSON(200, gin.H{
+			"msg": "welcome to my home",
+			"id":  k,
+		})
+	})
+
 	//管理员
 	admin := g.Group("/admin")
-	//admin.Use(middleware.JwtAuth())
+	admin.Use(middleware.JwtAuth())
+
+	admin.GET("/friend", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"msg": "hello",
+			"id":  c.Param("id"),
+		})
+	})
+
 	admin.GET("/get_product_info/:id", api.GetSingleProductInfo)
 	admin.GET("/get_order_info/:id", api.GetSingleOrderInfo)
 	admin.GET("/get_category_info/:id", api.GetCategoryInfo)
@@ -39,16 +56,5 @@ func initRouter(g *gin.Engine) {
 	admin.POST("/update_address/:id", api.UpdateAddress)
 	admin.POST("/create_address", api.CreteAddress)
 	admin.POST("/delete_address/:id", api.DeleteProduct)
-	//user.GET("/", func(c *gin.Context) {
-	//	c.JSON(200,gin.H{
-	//		"msg":"welcome to my home",
-	//	})
-	//})
-	//user.GET("/friend", func(c *gin.Context) {
-	//	c.JSON(200,gin.H{
-	//		"msg":"hello",
-	//		"id":c.Param("id"),
-	//	})
-	//})
 
 }

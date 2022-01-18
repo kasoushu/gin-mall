@@ -24,4 +24,5 @@ type Product struct {
 	Status           uint    `json:"status"`
 	Created          string  `json:"created"`
 	Updated          string  `json:"updated"`
+	CreatedBy        uint64  `json:"created_by"`
 }

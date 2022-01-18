@@ -1,7 +1,7 @@
 package model
 
 type User struct {
-	Id       int    `json:"id"`
+	Id       uint64 `json:"id"`
 	Name     string `json:"name"`
 	Age      int    `json:"age"`
 	Phone    string `json:"phone"`
@@ -9,7 +9,7 @@ type User struct {
 }
 
 type Admin struct {
-	Id       int    `json:"id"`
+	Id       uint64 `json:"id"`
 	Name     string `json:"name"`
 	Phone    string `json:"phone"`
 	Password string `json:"password"`

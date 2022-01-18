@@ -75,7 +75,7 @@ func UserLogin(c *gin.Context) {
 	ok := service.IsExist(p, &uu)
 	//fmt.Println(p.Phone,p.Password,id)
 	if ok {
-		token, err := middleware.CreateToken(uu.Name, uu.Phone)
+		token, err := middleware.CreateToken(uint64(uu.Id), uu.Phone)
 		if err != nil {
 			model.Failed("token error", c)
 		}
@@ -108,7 +108,7 @@ func AdminLogin(c *gin.Context) {
 		return
 	}
 	if uu.Password == p.Password {
-		token, err := middleware.CreateToken(uu.Name, uu.Phone)
+		token, err := middleware.CreateToken(uu.Id, uu.Phone)
 		if err != nil {
 			model.Failed("token error", c)
 		}
