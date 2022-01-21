@@ -8,11 +8,13 @@ import (
 
 func initRouter(g *gin.Engine) {
 	//user login,signup
+	g.Use(middleware.CORS())
 	g.POST("/login", api.UserLogin)
 	g.POST("/signup", api.UserSignUp)
 	g.POST("/admin_login", api.AdminLogin)
-	g.POST("/admin_signup", api.AdminSIgnUp)
+	g.POST("/admin_register", api.AdminSIgnUp)
 	//user association
+	//cors setting
 	user := g.Group("/:id")
 	//
 	user.Use(middleware.JwtAuth())

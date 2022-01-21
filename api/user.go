@@ -59,8 +59,12 @@ func UserSignUp(c *gin.Context) {
 		return
 	}
 	if row.Scan(&flag); flag == -1 {
-		common.InsertUser(uu)
-		model.Success("signup successful!", true, c)
+		if common.InsertUser(uu) {
+			model.Success("signup successful!", true, c)
+			return
+		}
+		fmt.Println("insert error")
+		model.Failed("insert error", c)
 		return
 	}
 	model.Failed("phone had existed", c)
@@ -82,8 +86,8 @@ func UserLogin(c *gin.Context) {
 		model.Success("successful login ", gin.H{
 			"id":    uu.Id,
 			"name":  uu.Name,
-			"age":   uu.Age,
 			"token": token,
+			"phone": uu.Phone,
 		}, c)
 		return
 	}

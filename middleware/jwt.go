@@ -45,13 +45,13 @@ func JwtAuth() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		tk := c.Request.Header.Get("token")
 		if tk == "" {
-			model.Failed("token is empty", c)
+			model.AuthFailed("authorization empty", c)
 			c.Abort()
 			return
 		}
 		k := VerifyToken(tk)
 		if k == 0 {
-			model.Failed("token authorization error", c)
+			model.AuthFailed("token authorization error", c)
 			c.Abort()
 			return
 		}

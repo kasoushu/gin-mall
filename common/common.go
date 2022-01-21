@@ -1,27 +1,30 @@
 package common
 
 import (
-"database/sql"
-"gin_mall/global"
-"gin_mall/model"
+	"database/sql"
+	"fmt"
+	"gin_mall/global"
+	"gin_mall/model"
 )
 
-func QueryUser(u model.WebLoginUser)(*sql.Row,error){
-	stm ,err := global.MDB.Prepare("select id,name,age,phone from users where phone=? and password=?")
+func QueryUser(u model.WebLoginUser) (*sql.Row, error) {
+	stm, err := global.MDB.Prepare("select id,name,age,phone fselect id,name,age,phone from userrom users where phone=? and password=?")
 	if err != nil {
-		return nil,err
+		return nil, err
 	}
-	row := stm.QueryRow(u.Phone,u.Password)
-	return row,nil
+	row := stm.QueryRow(u.Phone, u.Password)
+	return row, nil
 }
 
-func InsertUser(user model.User) bool{
-	stm,err := global.MDB.Prepare("insert into users(name,age,phone,password) values (?,?,?,?)")
+func InsertUser(user model.User) bool {
+	stm, err := global.MDB.Prepare("insert into users(name,phone,password) values (?,?,?)")
 	if err != nil {
+		fmt.Println(err)
 		return false
 	}
-	_,err= stm.Exec(user.Name,user.Age,user.Phone,user.Password)
-	if err!=nil {
+	_, err = stm.Exec(user.Name, user.Phone, user.Password)
+	if err != nil {
+		fmt.Println(err)
 		return false
 	}
 	return true
