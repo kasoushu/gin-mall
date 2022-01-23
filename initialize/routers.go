@@ -59,4 +59,5 @@ func initRouter(g *gin.Engine) {
 	admin.POST("/create_address", api.CreteAddress)
 	admin.POST("/delete_address/:id", api.DeleteProduct)
 
+	admin.GET("/get_page", api.GetSingePage)
 }

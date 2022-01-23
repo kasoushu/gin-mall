@@ -121,3 +121,45 @@ func GetProductInfo(id uint64, p *model.Product) bool {
 	}
 	return true
 }
+func GetTotal(id uint64) int {
+	row := global.MDB.QueryRow("select count(*) from products where products.created_by=? ", id)
+	if row.Err() != nil {
+		fmt.Println(row.Err())
+		return 0
+	}
+	var c = 0
+	row.Scan(&c)
+	return c
+}
+
+func GetSinglePageProducts(pageSize, pages int, id uint64) ([]*model.ProductTransfer, bool) {
+	var products = make([]*model.ProductTransfer, 0, pageSize)
+	rows, err := global.MDB.Query(`select product_id,category_id,categories.name as category_name ,title, description,price,
+	  amount,sales,main_image, delivery,
+	  assurance,products.name, weight, brand, origin, shelf_life,
+	   net_weight, use_way, packing_way,
+	   storage_condition, detail_image,
+		status, products.created, products.updated,
+       created_by from products,categories,admins where (products.created_by=admins.id) and (admins.id=? ) and (categories.id=products.category_id)  limit ? offset ? ;`,
+		id, pageSize, (pages-1)*pageSize)
+	if err != nil {
+		fmt.Println(err)
+		return nil, false
+	}
+	for rows.Next() {
+		var p model.ProductTransfer
+		err := rows.Scan(&p.ProductId, &p.CategoryId, &p.CategoryName, &p.Title, &p.Description, &p.Price,
+			&p.Amount, &p.Sales, &p.MainImage, &p.Delivery,
+			&p.Assurance, &p.Name, &p.Weight, &p.Brand,
+			&p.Origin, &p.ShelfLIfe, &p.NetWeight, &p.UseWay,
+			&p.PackingWay, &p.StorageCondition, &p.DetailImage,
+			&p.Status, &p.Created, &p.Updated, &p.CreatedBy)
+		if err != nil {
+			fmt.Println(err)
+			return nil, false
+		}
+		//fmt.Println(p)
+		products = append(products, &p)
+	}
+	return products, true
+}

@@ -83,3 +83,26 @@ func GetSingleProductInfo(ctx *gin.Context) {
 	model.Failed("get info fail", ctx)
 
 }
+
+type Page struct {
+	PageSize  int ` form:"page_size"`
+	PageIndex int `form:"page_index"`
+}
+
+func GetSingePage(c *gin.Context) {
+	adminId := c.GetUint64("primary_id")
+	var page Page
+	if c.ShouldBindQuery(&page) != nil {
+		model.Failed("bind error", c)
+		return
+	}
+
+	fmt.Println(page.PageIndex, page.PageSize)
+	fmt.Println(adminId)
+
+	if list, ok := service.GetSinglePageProducts(page.PageSize, page.PageIndex, adminId); ok {
+		model.SuccessPage("get list successful!", list, service.GetTotal(adminId), c)
+		return
+	}
+	model.Failed("get list error", c)
+}

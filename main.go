@@ -1,12 +1,10 @@
 package main
 
 import (
-	"fmt"
 	"gin_mall/global"
 	"gin_mall/initialize"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/spf13/viper"
 )
 
 type User struct {
@@ -23,6 +21,6 @@ func main() {
 
 	add := global.Config.Server.Address + ":" + global.Config.Server.Port
 	defer global.MDB.Close()
-	fmt.Println(viper.Get("newarrary.0.name"))
+	//fmt.Println(viper.Get("newarrary.0.name"))
 	r.Run(add)
 }

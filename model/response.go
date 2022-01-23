@@ -12,7 +12,7 @@ type Response struct {
 }
 
 type PageResult struct {
-	Total int64       `json:"total"`
+	Total int         `json:"total"`
 	List  interface{} `json:"list"`
 }
 
@@ -31,7 +31,7 @@ func Failed(message string, c *gin.Context) {
 }
 
 // SuccessPage 请求成功返回分页结果
-func SuccessPage(message string, data interface{}, rows int64, c *gin.Context) {
-	page := &PageResult{Total: rows, List: data}
+func SuccessPage(message string, data interface{}, total int, c *gin.Context) {
+	page := &PageResult{Total: total, List: data}
 	c.JSON(http.StatusOK, Response{200, message, page})
 }
