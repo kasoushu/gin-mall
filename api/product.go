@@ -15,8 +15,10 @@ func CreteProduct(ctx *gin.Context) {
 		model.Failed("params error", ctx)
 		return
 	}
+
+	fmt.Println(fmt.Sprintf("name:%s,des:%s,price:%f,amout%f", product.Name, product.Description, product.Price, product.Amount))
 	if product.Name == "" || product.Amount == 0 || product.Price == 0 {
-		model.Failed("params error", ctx)
+		model.Failed("params can not be empty", ctx)
 		return
 	}
 	id := ctx.MustGet("primary_id")
@@ -101,6 +103,7 @@ func GetSingePage(c *gin.Context) {
 	fmt.Println(adminId)
 
 	if list, ok := service.GetSinglePageProducts(page.PageSize, page.PageIndex, adminId); ok {
+		fmt.Println(list)
 		model.SuccessPage("get list successful!", list, service.GetTotal(adminId), c)
 		return
 	}

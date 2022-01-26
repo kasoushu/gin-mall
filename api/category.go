@@ -80,3 +80,24 @@ func GetCategoryInfo(ctx *gin.Context) {
 	model.Failed("get info fail", ctx)
 
 }
+
+func GetCategoriesParent(ctx *gin.Context) {
+	var list = make([]model.Category, 0)
+	pid := ctx.Param("pid")
+	id, err := strconv.ParseUint(pid, 10, 64)
+	if err != nil {
+		model.Failed("parse pid error", ctx)
+		return
+	}
+	rows := service.GetParentCategories(id)
+	for rows.Next() {
+		var c model.Category
+		rows.Scan(&c.Id, &c.Name, &c.ParentId, &c.Created, &c.Updated)
+		fmt.Println(c)
+		list = append(list, c)
+	}
+	model.Success("get cateogries parents successgul! ", model.CategoryParents{
+		Total: len(list),
+		List:  list,
+	}, ctx)
+}

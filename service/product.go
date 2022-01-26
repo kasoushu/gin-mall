@@ -134,6 +134,7 @@ func GetTotal(id uint64) int {
 
 func GetSinglePageProducts(pageSize, pages int, id uint64) ([]*model.ProductTransfer, bool) {
 	var products = make([]*model.ProductTransfer, 0, pageSize)
+	fmt.Println(pageSize, pages, id)
 	rows, err := global.MDB.Query(`select product_id,category_id,categories.name as category_name ,title, description,price,
 	  amount,sales,main_image, delivery,
 	  assurance,products.name, weight, brand, origin, shelf_life,
@@ -158,8 +159,9 @@ func GetSinglePageProducts(pageSize, pages int, id uint64) ([]*model.ProductTran
 			fmt.Println(err)
 			return nil, false
 		}
-		//fmt.Println(p)
+		fmt.Println(p)
 		products = append(products, &p)
 	}
+	//fmt.Println("in   ", products)
 	return products, true
 }

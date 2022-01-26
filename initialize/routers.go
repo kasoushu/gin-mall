@@ -37,16 +37,17 @@ func initRouter(g *gin.Engine) {
 			"id":  c.Param("id"),
 		})
 	})
-
 	admin.GET("/get_product_info/:id", api.GetSingleProductInfo)
 	admin.GET("/get_order_info/:id", api.GetSingleOrderInfo)
 	admin.GET("/get_category_info/:id", api.GetCategoryInfo)
 	admin.GET("/get_address_info/:id", api.GetSingleAddressInfo)
 
+	admin.GET("/get_page", api.GetSingePage)
 	admin.POST("/update_product/:id", api.UpdateProduct)
 	admin.POST("/create_product", api.CreteProduct)
 	admin.POST("/delete_product/:id", api.DeleteProduct)
 
+	admin.GET("/get_category_parent/:pid", api.GetCategoriesParent)
 	admin.POST("/update_category/:id", api.UpdateCategory)
 	admin.POST("/create_category", api.CreteCategory)
 	admin.POST("/delete_category/:id", api.DeleteCategory)
@@ -58,6 +59,4 @@ func initRouter(g *gin.Engine) {
 	admin.POST("/update_address/:id", api.UpdateAddress)
 	admin.POST("/create_address", api.CreteAddress)
 	admin.POST("/delete_address/:id", api.DeleteProduct)
-
-	admin.GET("/get_page", api.GetSingePage)
 }

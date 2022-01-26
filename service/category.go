@@ -1,6 +1,7 @@
 package service
 
 import (
+	"database/sql"
 	"fmt"
 	"gin_mall/global"
 	"gin_mall/model"
@@ -22,12 +23,12 @@ func InsertCategory(c model.Category) bool {
 	c.Created = time.Now().Format("2006-01-02 15:04:05")
 	c.Updated = time.Now().Format("2006-01-02 15:04:05")
 	pre, err := global.MDB.Prepare(`insert into categories (name, parent_id,
-                        level, sort, created, updated ) values (?,?,?,?,?,?) `)
+                         created, updated ) values (?,?,?,?,?,?) `)
 	if err != nil {
 		fmt.Println(err)
 		return false
 	}
-	_, err = pre.Exec(c.Name, c.ParentId, c.Level, c.Sort, c.Created, c.Updated)
+	_, err = pre.Exec(c.Name, c.ParentId, c.Created, c.Updated)
 	if err != nil {
 		fmt.Println(err)
 		return false
@@ -56,7 +57,7 @@ func UpdateCategory(id uint64, c model.Category) bool {
 	}
 	c.Updated = time.Now().Format("2006-01-02 15:04:05")
 	_, err := global.MDB.Exec(`update categories set name =?,
-					parent_id=? , level=? , sort=? ,updated=? where categories.id=? `, id)
+					parent_id=?  ,updated=? where categories.id=? `, id)
 	if err != nil {
 		fmt.Println(err)
 		return false
@@ -65,7 +66,7 @@ func UpdateCategory(id uint64, c model.Category) bool {
 }
 func GetCategoryInfo(id uint64, c *model.Category) bool {
 
-	pre, err := global.MDB.Prepare(`select id, name, parent_id, level, sort, created, updated from categories where categories.id=? `)
+	pre, err := global.MDB.Prepare(`select id, name, parent_id, created, updated from categories where categories.id=? `)
 	if err != nil {
 		fmt.Println(err)
 		return false
@@ -75,10 +76,18 @@ func GetCategoryInfo(id uint64, c *model.Category) bool {
 		fmt.Println(row.Err())
 		return false
 	}
-	err = row.Scan(&c.Id, &c.Name, &c.ParentId, &c.Level, &c.Sort, &c.Created, &c.Updated)
+	err = row.Scan(&c.Id, &c.Name, &c.ParentId, &c.Created, &c.Updated)
 	if err != nil {
 		fmt.Println(err)
 		return false
 	}
 	return true
+}
+func GetParentCategories(pid uint64) *sql.Rows {
+	rows, err := global.MDB.Query("select * from categories where parent_id=? ", pid)
+	if err != nil {
+		fmt.Println(err)
+		return nil
+	}
+	return rows
 }

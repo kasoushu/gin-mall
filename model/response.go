@@ -22,7 +22,7 @@ func Success(message string, data interface{}, c *gin.Context) {
 }
 
 func AuthFailed(message string, c *gin.Context) {
-	c.JSON(http.StatusOK, Response{400, message, 0})
+	c.JSON(http.StatusOK, Response{401, message, 0})
 }
 
 // Failed 请求失败返回
