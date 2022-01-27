@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"gin_mall/global"
 	"gin_mall/model"
+	"strconv"
 	"time"
 )
 
@@ -64,22 +65,12 @@ func UpdateCommodity(id uint64, p model.Product) bool {
 	p.Updated = time.Now().Format("2006-01-02 15:04:05")
 
 	pre, err := global.MDB.Prepare(`update products set category_id = ? , 
-                         title =? ,
-                         description=? ,
-                         price=? ,
-	    				amount=? ,
-                         sales=? ,
-                         main_image=? ,
-                         delivery=? ,
-                         assurance=? ,
-	    				name=? ,
-                         weight=?,
-                         brand=? ,
-                         origin=? ,
-                         shelf_life=? , 
-	    net_weight=? , use_way=? , packing_way=? , 
-	    storage_condition=? , detail_image=? ,
-		status=? , updated=? where product_id = ? `)
+                         title =? ,description=? ,price=? ,amount=? ,sales=? ,
+                         main_image=? ,delivery=? ,assurance=? ,name=? ,weight=?,
+                         brand=? ,origin=? ,shelf_life=? , 
+	    				use_way=? , packing_way=? , 
+	    				storage_condition=? , detail_image=? ,
+						status=? , updated=? where product_id = ? `)
 	if err != nil {
 		fmt.Println(err)
 		return false
@@ -88,9 +79,9 @@ func UpdateCommodity(id uint64, p model.Product) bool {
 		p.CategoryId, p.Title, p.Description, p.Price,
 		p.Amount, p.Sales, p.MainImage, p.Delivery,
 		p.Assurance, p.Name, p.Weight, p.Brand,
-		p.Origin, p.ShelfLIfe, p.NetWeight, p.UseWay,
+		p.Origin, p.ShelfLIfe, p.UseWay,
 		p.PackingWay, p.StorageCondition, p.DetailImage,
-		p.Status, p.Updated)
+		p.Status, p.Updated, id)
 	if err != nil {
 		fmt.Println(err)
 		return false
@@ -159,9 +150,47 @@ func GetSinglePageProducts(pageSize, pages int, id uint64) ([]*model.ProductTran
 			fmt.Println(err)
 			return nil, false
 		}
+		//set key
+		p.Key = p.ProductId
 		fmt.Println(p)
 		products = append(products, &p)
 	}
 	//fmt.Println("in   ", products)
 	return products, true
+}
+
+func GetProductByStatus() (model.ProductStatisticByStatus, error) {
+	var productStatisticByStatus model.ProductStatisticByStatus
+	var list = make(map[string]int)
+	for i := 0; i < 4; i++ {
+		list[strconv.Itoa(i)] = 0
+	}
+
+	rows, err := global.MDB.Query(`
+select status,count(*) as cnt from products group by status order by status;
+`)
+	if err != nil {
+		return productStatisticByStatus, err
+	}
+	if rows.Err() != nil {
+		fmt.Println(rows.Err())
+		return productStatisticByStatus, rows.Err()
+	}
+	for rows.Next() {
+		var p model.ProductByStatus
+		err := rows.Scan(&p.Status, &p.Total)
+		if err != nil {
+			return productStatisticByStatus, err
+		}
+		list[p.Status] = p.Total
+	}
+
+	for k, v := range list {
+		var p model.ProductByStatus = model.ProductByStatus{
+			k,
+			v,
+		}
+		productStatisticByStatus.List = append(productStatisticByStatus.List, p)
+	}
+	return productStatisticByStatus, nil
 }

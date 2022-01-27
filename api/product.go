@@ -109,3 +109,19 @@ func GetSingePage(c *gin.Context) {
 	}
 	model.Failed("get list error", c)
 }
+
+func GetStatisticByStatus(ctx *gin.Context) {
+
+	productStatistic, err := service.GetProductByStatus()
+	if err != nil {
+		fmt.Println(err)
+		model.Failed("get statistic failed", ctx)
+		return
+	}
+
+	for _, p := range productStatistic.List {
+		productStatistic.Total += p.Total
+	}
+
+	model.Success("get status astatistic successful!", productStatistic, ctx)
+}

@@ -27,6 +27,7 @@ type Product struct {
 	CreatedBy        uint64  `json:"created_by"`
 }
 type ProductTransfer struct {
+	Key              uint64  `json:"key"`
 	ProductId        uint64  `json:"product_id"`
 	CategoryId       uint64  `json:"category_id"`
 	CategoryName     string  `json:"category_name"`
