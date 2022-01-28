@@ -112,6 +112,22 @@ func GetProductInfo(id uint64, p *model.Product) bool {
 	}
 	return true
 }
+
+func GetProductName(id uint64) (string, bool) {
+	row := global.MDB.QueryRow(`select  name from products where product_id = ? `, id)
+	if row.Err() != nil {
+		fmt.Println(row.Err())
+		return "", false
+	}
+	var s = ""
+	err := row.Scan(&s)
+	if err != nil {
+		fmt.Println(err)
+		return "", false
+	}
+	return s, true
+}
+
 func GetTotal(id uint64) int {
 	row := global.MDB.QueryRow("select count(*) from products where products.created_by=? ", id)
 	if row.Err() != nil {

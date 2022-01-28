@@ -68,13 +68,8 @@ func GetSingleAddressInfo(ctx *gin.Context) {
 		model.Failed("parse params error", ctx)
 		return
 	}
-	var address model.Address
-	if service.GetAddressInfo(id, &address) {
-		//p, err := json.Marshal(address)
-		if err != nil {
-			fmt.Println(err)
-			model.Failed("convert json error", ctx)
-		}
+	if address, ok := service.GetAddressInfo(id); ok {
+
 		model.Success("get info successful!", address, ctx)
 		return
 	}

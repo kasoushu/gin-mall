@@ -3,9 +3,12 @@ package model
 type User struct {
 	Id       uint64 `json:"id"`
 	Name     string `json:"name"`
-	Age      int    `json:"age"`
 	Phone    string `json:"phone"`
 	Password string `json:"password"`
+}
+type UserInfo struct {
+	Name  string `json:"name"`
+	Phone string `json:"phone"`
 }
 
 type Admin struct {

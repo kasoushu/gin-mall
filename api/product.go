@@ -91,7 +91,7 @@ type Page struct {
 	PageIndex int `form:"page_index"`
 }
 
-func GetSingePage(c *gin.Context) {
+func GetSingeProductPage(c *gin.Context) {
 	adminId := c.GetUint64("primary_id")
 	var page Page
 	if c.ShouldBindQuery(&page) != nil {
@@ -103,7 +103,7 @@ func GetSingePage(c *gin.Context) {
 	fmt.Println(adminId)
 
 	if list, ok := service.GetSinglePageProducts(page.PageSize, page.PageIndex, adminId); ok {
-		fmt.Println(list)
+		//fmt.Println(list)
 		model.SuccessPage("get list successful!", list, service.GetTotal(adminId), c)
 		return
 	}

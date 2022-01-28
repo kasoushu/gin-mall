@@ -38,11 +38,11 @@ func initRouter(g *gin.Engine) {
 		})
 	})
 	admin.GET("/get_product_info/:id", api.GetSingleProductInfo)
-	admin.GET("/get_order_info/:id", api.GetSingleOrderInfo)
+	//admin.GET("/get_order_info/:id", api.GetSingleOrderInfo)
 	admin.GET("/get_category_info/:id", api.GetCategoryInfo)
 	admin.GET("/get_address_info/:id", api.GetSingleAddressInfo)
 
-	admin.GET("/get_page", api.GetSingePage)
+	admin.GET("/get_page", api.GetSingeProductPage)
 	admin.POST("/update_product/:id", api.UpdateProduct)
 	admin.POST("/create_product", api.CreteProduct)
 	admin.POST("/delete_product/:id", api.DeleteProduct)
@@ -52,6 +52,7 @@ func initRouter(g *gin.Engine) {
 	admin.POST("/create_category", api.CreteCategory)
 	admin.POST("/delete_category/:id", api.DeleteCategory)
 
+	admin.GET("/get_order_page", api.GetSingeOrderPage)
 	admin.POST("/update_order/:id", api.UpdateOrder)
 	admin.POST("/create_order", api.CreteOrder)
 	admin.POST("/delete_order/:id", api.DeleteOrder)
