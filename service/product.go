@@ -168,7 +168,7 @@ func GetSinglePageProducts(pageSize, pages int, id uint64) ([]*model.ProductTran
 		}
 		//set key
 		p.Key = p.ProductId
-		fmt.Println(p)
+		//fmt.Println(p)
 		products = append(products, &p)
 	}
 	//fmt.Println("in   ", products)

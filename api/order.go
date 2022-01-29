@@ -55,10 +55,10 @@ func DeleteOrder(ctx *gin.Context) {
 		return
 	}
 	if service.DeleteOrder(id) {
-		model.Success("delete successful!", "", ctx)
+		model.Success("delete successful!", "true", ctx)
 		return
 	}
-	model.Failed("delete fail", ctx)
+	model.Failed("delete fail order is not done or network error", ctx)
 }
 
 //func GetSingleOrderInfo(ctx *gin.Context) {
@@ -99,4 +99,30 @@ func GetSingeOrderPage(c *gin.Context) {
 		return
 	}
 	model.Failed("get list error", c)
+}
+
+func GetTenDaysOrderCount(ctx *gin.Context) {
+	adminId := ctx.GetUint64("primary_id")
+	var orderService service.Order
+
+	m, err := orderService.TenDaysOrderCount(adminId)
+	if err != nil {
+		fmt.Println(err)
+		model.Failed("get data error ", ctx)
+		return
+	}
+
+	model.Success("get data successful!", m, ctx)
+}
+
+func GetOrderStatistic(ctx *gin.Context) {
+	adminId := ctx.GetUint64("primary_id")
+	var orderService service.Order
+	st, err := orderService.OrderStatistic(adminId)
+	if err != nil {
+		fmt.Println(err)
+		model.Failed("get message error", ctx)
+		return
+	}
+	model.Success("get order statistic successful! ", st, ctx)
 }

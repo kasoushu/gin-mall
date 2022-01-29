@@ -63,5 +63,6 @@ func initRouter(g *gin.Engine) {
 
 	//statistic
 	admin.GET("/product_statistic_by_status", api.GetStatisticByStatus)
-
+	admin.GET("/ten_days_order_count", api.GetTenDaysOrderCount)
+	admin.GET("/order_statistic", api.GetOrderStatistic)
 }

@@ -99,8 +99,8 @@ func GetSingeProductPage(c *gin.Context) {
 		return
 	}
 
-	fmt.Println(page.PageIndex, page.PageSize)
-	fmt.Println(adminId)
+	//fmt.Println(page.PageIndex, page.PageSize)
+	//fmt.Println(adminId)
 
 	if list, ok := service.GetSinglePageProducts(page.PageSize, page.PageIndex, adminId); ok {
 		//fmt.Println(list)

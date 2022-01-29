@@ -93,7 +93,7 @@ func GetCategoriesParent(ctx *gin.Context) {
 	for rows.Next() {
 		var c model.Category
 		rows.Scan(&c.Id, &c.Name, &c.ParentId, &c.Created, &c.Updated)
-		fmt.Println(c)
+		//fmt.Println(c)
 		list = append(list, c)
 	}
 	model.Success("get cateogries parents successgul! ", model.CategoryParents{
