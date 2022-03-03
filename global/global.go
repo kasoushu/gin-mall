@@ -14,3 +14,8 @@ var (
 	PrivateKey *rsa.PrivateKey
 	PublicKey  *rsa.PublicKey
 )
+
+// redis cache
+var (
+	AdminOrderListPrefix string = "AdminOrderList"
+)

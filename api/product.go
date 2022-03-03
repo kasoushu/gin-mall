@@ -98,10 +98,8 @@ func GetSingeProductPage(c *gin.Context) {
 		model.Failed("bind error", c)
 		return
 	}
-
 	//fmt.Println(page.PageIndex, page.PageSize)
 	//fmt.Println(adminId)
-
 	if list, ok := service.GetSinglePageProducts(page.PageSize, page.PageIndex, adminId); ok {
 		//fmt.Println(list)
 		model.SuccessPage("get list successful!", list, service.GetTotal(adminId), c)

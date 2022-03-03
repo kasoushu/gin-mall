@@ -43,6 +43,7 @@ func VerifyToken(tokenstring string) uint64 {
 
 func JwtAuth() gin.HandlerFunc {
 	return func(c *gin.Context) {
+
 		tk := c.Request.Header.Get("token")
 		if tk == "" {
 			model.AuthFailed("authorization empty", c)

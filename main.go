@@ -22,5 +22,7 @@ func main() {
 	add := global.Config.Server.Address + ":" + global.Config.Server.Port
 	defer global.MDB.Close()
 	//fmt.Println(viper.Get("newarrary.0.name"))
+
 	r.Run(add)
+
 }

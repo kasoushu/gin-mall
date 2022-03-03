@@ -9,7 +9,7 @@ upload:
   savepath: "g:/img/picture"
 
 redis_server:
-  address: "choucaicai.top:6378"
+  address: "localhost:6378"
   password: ""
   database: 0
 
